@@ -1,6 +1,5 @@
 <?php
 
-// src/config/openexchangerates.php
 
 return [
     /*

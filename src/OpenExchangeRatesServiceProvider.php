@@ -10,8 +10,8 @@ class OpenExchangeRatesServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->mergeConfigFrom(
-            __DIR__.'/config/openexchangerates.php',
-            'openexchangerates'
+            __DIR__.'/config/openexchangerate.php',
+            'openexchangerate'
         );
 
         $this->app->singleton(OpenExchangeRatesClient::class, function ($app) {
