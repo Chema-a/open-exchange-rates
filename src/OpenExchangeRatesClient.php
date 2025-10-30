@@ -10,6 +10,7 @@ class OpenExchangeRatesClient
 {
     protected string $apiKey;
     protected Client $httpClient;
+    private const RATE_SCALE_LENGTH = 6;
 
     /**
 
@@ -60,21 +61,25 @@ class OpenExchangeRatesClient
                 return [
                     'base'   => $rates['base'],
                     'rates'  => $rates['rates'],
-                    'source' => 'primary',
                 ];
             }
 
             if (!isset($rates['rates'][$currencyTo])) {
                 return false;
             }
+            $finalRate = $this->returnRate((float) $rates['rates'][$currencyTo]);
 
             return [
                 'base'      => $rates['base'],
-                'rate'      => $rates['rates'][$currencyTo],
+                'rate'      => $finalRate,
                 'timestamp' => $rates['timestamp'],
             ];
         }
-
         return false;
+    }
+
+    private function returnRate(float $rate): float
+    {
+        return \round($rate, self::RATE_SCALE_LENGTH, PHP_ROUND_HALF_UP);
     }
 }
