@@ -1,5 +1,5 @@
 {
-  "name": "jdavalos/open-exchange-rates",
+  "name": "txema/open-exchange-rates",
   "description": "This is a Open Exchange Rate Package for PHP",
   "type": "library",
   "require": {
