@@ -3,21 +3,27 @@
 namespace Txema\OpenExchangeRates;
 
 use GuzzleHttp\Client;
-use Psr\Log\LoggerInterface;
+
+// Se eliminó Psr\Log\LoggerInterface porque no se usaba
 
 class OpenExchangeRatesClient
 {
     protected string $apiKey;
     protected Client $httpClient;
-    public function __construct(?Client $client = null)
+
+    /**
+
+     * @param string $apiKey Api Key.
+     * @param Client $httpClient GuzzleClient.
+     */
+    public function __construct(string $apiKey, Client $httpClient)
     {
-        // Get API key from environment
-        $this->apiKey = $_ENV['OPEN_EXCHANGE_API_KEY'] ?? getenv('OPEN_EXCHANGE_API_KEY') ?? '';
-        if (empty($this->apiKey)) {
-            throw new \RuntimeException('OpenExchangeRates API key is not set in .env');
+        if (empty($apiKey)) {
+            throw new \InvalidArgumentException('OpenExchangeRates API key cannot be empty.');
         }
 
-        $this->httpClient = $client ?: new Client(['timeout' => 20]);
+        $this->apiKey = $apiKey;
+        $this->httpClient = $httpClient;
     }
 
     /**
@@ -33,7 +39,6 @@ class OpenExchangeRatesClient
         $currencyFrom = strtoupper($currencyFrom);
         $currencyTo = $currencyTo ? strtoupper($currencyTo) : null;
 
-        // Make HTTP request
         $response = $this->httpClient->request(
             'GET',
             'https://openexchangerates.org/api/latest.json',

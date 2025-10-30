@@ -3,7 +3,8 @@
   "description": "This is a Open Exchange Rate Package for PHP",
   "type": "library",
   "require": {
-    "guzzlehttp/guzzle": "^7.10"
+    "guzzlehttp/guzzle": "^7.10",
+    "illuminate/support": "^12.36"
   },
   "require-dev": {
     "phpunit/phpunit": "^12.4"
@@ -23,5 +24,21 @@
       "name": "Chema Zumaya",
       "email": "jose.davalos4980@alumnos.udg.mx"
     }
-  ]
+  ],
+  "repositories": {
+    "openexchangerates": {
+      "type": "vcs",
+      "url": "https://github.com/Chema-a/open-exchange-rates"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Txema\\OpenExchangeRates\\OpenExchangeRatesServiceProvider"
+      ],
+      "aliases": {
+        "Exchange": "Txema\\OpenExchangeRates\\Facades\\Exchange"
+      }
+    }
+  }
 }
